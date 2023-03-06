@@ -42,8 +42,10 @@ export default {
     return {
       title: "Welcome to Opportunity",
       currentDate: "",
-      sheet_id: "1CR1UKN0LAPNs6lWbfA2gBI2FazmWdVSFIzIwi5TG5Z4",
-      api_token: "AIzaSyA-qeDXOhEeQDA0vQf7LgkF7DQtGnAtmAU",
+      /* sheet_id: "1CR1UKN0LAPNs6lWbfA2gBI2FazmWdVSFIzIwi5TG5Z4",
+      api_token: "AIzaSyA-qeDXOhEeQDA0vQf7LgkF7DQtGnAtmAU", */
+      sheet_id: "1-KaU9mi6Av4fYc7vjZxkMr0wpxT8SuldCIldW-YphxA",
+      api_token: "AIzaSyCuQ7WL9T-Urn0BeWuYjvvVHFPsIrDBl7U",
       entries: [],
     };
   },
@@ -92,7 +94,7 @@ return `https://sheets.googleapis.com/v4/spreadsheets/${this.sheet_id}/values:ba
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   margin-top: 37px;
-  margin-left: 49px;
+  margin-left: 07%;
   }
 
  body {
