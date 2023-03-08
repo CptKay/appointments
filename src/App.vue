@@ -8,9 +8,13 @@
 
 <ul v-if="entries && entries.length" class="entry-list">
   <li class="entry-item" v-for="entry in entries" :key="entry.id" >
-  <span class="entry-daytime">{{ entry[0] }} Uhr, {{ entry[1].replaceAll("/", ".") }}</span><br />
+  <!-- 
+    <span class="entry-daytime">{{ entry[0]+++ }} Uhr, {{ entry[1].replaceAll("/", ".") }}</span><br />
   <h3 class="entry-title">{{ entry[2] }}</h3>
-  <span class="entry-description">{{ entry[3] }}</span><br />
+  <span class="entry-description">{{ entry[3] }}</span><br /> 
+-->
+
+<EventEntry :entry="entry" />
 </li>
 </ul>
 
@@ -22,9 +26,9 @@
 
 <footer>
         
-            <img src="../src/assets/STZH_SEB_Logo.png" alt="">
-            <img src="../src/assets/Opportunity.png" alt="">
-            <img class="footer-right" src="../src/assets/SAG_Logo_De.png" alt="">
+            <a href="https://www.stadt-zuerich.ch/sd/de/index/ueber_das_departement/organisation/seb.html"><img src="../src/assets/STZH_SEB_Logo.png" alt=""></a>
+            <a href="https://opportunity.stiftung-sag.ch/"><img src="../src/assets/Opportunity.png" alt=""></a>
+            <a href="https://www.stiftung-sag.ch/de/willkommen/"><img class="footer-right" src="../src/assets/SAG_Logo_De.png" alt=""></a>
           
 
     </footer>
@@ -32,12 +36,13 @@
 </template>
 
 <script>
-// import HelloWorld from './components/HelloWorld.vue'
+import EventEntry from './components/EventEntry.vue'
 
 import axios from "axios";
 
 export default {
   name: 'App',
+  components: { EventEntry },
   data() {
     return {
       title: "Welcome to Opportunity",
@@ -65,8 +70,23 @@ return `https://sheets.googleapis.com/v4/spreadsheets/${this.sheet_id}/values:ba
 
     getData() {
       axios.get(this.gsheet_url).then((response) => {
-        this.entries = response.data.valueRanges[0].values;
+        // this.entries = response.data.valueRanges[0].values;
+        const rows = response.data.valueRanges[0].values;
+    const currentDate = new Date();
+    const filteredRows = rows.filter(row => {
+      const dateParts = row[1].split("/");
+      const rowDate = new Date(`${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`);
+      return rowDate >= currentDate;
       });
+      this.entries = filteredRows.sort((row1, row2) => {
+      const dateParts1 = row1[1].split("/");
+      const dateParts2 = row2[1].split("/");
+      const date1 = new Date(`${dateParts1[2]}-${dateParts1[1]}-${dateParts1[0]}`);
+      const date2 = new Date(`${dateParts2[2]}-${dateParts2[1]}-${dateParts2[0]}`);
+      return date1 - date2;
+    });
+  });
+
     },
     updateCurrentDate() {
       let today = new Date();
@@ -80,7 +100,7 @@ return `https://sheets.googleapis.com/v4/spreadsheets/${this.sheet_id}/values:ba
   },
   mounted() {
     this.refreshData();
-    setInterval(this.refreshData,180000000);
+    setInterval(this.refreshData,18000000);
   },
 };
 </script>
@@ -120,12 +140,12 @@ ul {
   list-style-type: none; /* Remove bullets */
   font-size: 28px;
   margin:0;
+  /* margin-bottom:150px; */
   padding:0;
 }
 
 li {
   width: 88%;
-  
   margin-top: 2.5%;
   padding: 2.5%;
   background: #0F05A0;

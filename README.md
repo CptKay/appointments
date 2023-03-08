@@ -1,24 +1,7 @@
-# appointments
+# Opportunity appointments
 
-## Project setup
-```
-npm install
-```
+## Signage welcome screen in Vue.js
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+### optimized for 1080 X 1920
 
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+online: https://schedule-opportunity.netlify.app/
